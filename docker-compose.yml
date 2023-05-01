@@ -1,8 +1,10 @@
-version: '3.7'
+version: '3.8'
 
 services:
-  app:
-    build: src
+  web-api:
+    build:
+      context: /home/dev/homework_12/src
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
