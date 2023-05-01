@@ -11,7 +11,7 @@ services:
     entrypoint: >
       sh -c "git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git
       && cd App42PaaS-Java-MySQL-Sample
-      && start-my-app-command"
+      && start-my-app-command.sh"
     depends_on:
       - db
   db:
