@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . /app
 
 RUN apk add --no-cache curl && \
-    curl -L -o mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.27/mysql-connector-java-8.0.27.jar && \
+    curl -L -o mysql-connector-java.jar https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git && \
     mkdir /app/ && \
     chmod +x start-my-app-command.sh
 
