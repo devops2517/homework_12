@@ -1,9 +1,10 @@
 version: '3.8'
-
 services:
-  web-api:
-    build:
-      context: /home/dev/homework_12/
+  app:
+    build: .
+    command: >
+      sh -c "git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git
+      && start-my-app-command"
     ports:
       - "8080:8080"
     depends_on:
