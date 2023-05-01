@@ -3,15 +3,12 @@ FROM openjdk:8-jdk-alpine
 RUN apk update && apk add --no-cache git
 
 WORKDIR /app
+COPY . /app
 
-# Если папка не существует, клонируем репозиторий
-RUN if [ ! -d "/app/App42PaaS-Java-MySQL-Sample" ]; then \
-      git clone https://github.com/username/repo.git /app/App42PaaS-Java-MySQL-Sample; \
-    fi
-
-COPY start-my-app-command.sh .
-COPY mysql-connector-java.jar .
-COPY config.properties /App42PaaS-Java-MySQL-Sample/src/main/resources/
+RUN apk add --no-cache curl && \
+    curl -L -o mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.27/mysql-connector-java-8.0.27.jar && \
+    mkdir /app/ && \
+    chmod +x start-my-app-command.sh
 
 ENV CLASSPATH=/app/mysql-connector-java.jar
 
