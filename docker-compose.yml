@@ -3,7 +3,7 @@ version: '3.8'
 services:
   web-api:
     build:
-      context: /home/dev/homework_12/src
+      context: /home/dev/homework_12/
     ports:
       - "8080:8080"
     depends_on:
