@@ -1,18 +1,15 @@
 FROM openjdk:8-jdk-alpine
 
-RUN apk update && \
-    apk add --no-cache curl && \
-    mkdir -p /app/App42PaaS-Java-MySQL-Sample
+RUN apk update && apk add --no-cache git
 
 WORKDIR /app
+COPY . /app
 
-RUN wget -O mysql-connector-java.jar https://github.com/shephertz/App42PaaS-Java-MySQL-Sample/raw/master/lib/mysql-connector-java-5.1.34-bin.jar
-
-COPY start-my-app-command.sh /app/App42PaaS-Java-MySQL-Sample
-COPY config.properties /app/App42PaaS-Java-MySQL-Sample/src/main/resources/
+RUN apk add --no-cache curl && \
+    curl -L -o mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.27/mysql-connector-java-8.0.27.jar && \
+    mkdir /app/ && \
+    chmod +x start-my-app-command.sh
 
 ENV CLASSPATH=/app/mysql-connector-java.jar
 
-CMD ["sh", "-c", "cd /app/App42PaaS-Java-MySQL-Sample && ./start-my-app-command.sh"]
-
-
+CMD ["sh", "-c", "./start-my-app-command.sh"]
