@@ -1,15 +1,12 @@
-FROM openjdk:8-jdk-alpine
-
-RUN apk update && apk add --no-cache git
-
+FROM maven:3.6.3-jdk-8 AS build
 WORKDIR /app
-COPY . /app
 
-RUN apk add --no-cache curl && \
-    curl -L -o mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.27/mysql-connector-java-8.0.27.jar && \
-    mkdir /app/ && \
-    chmod +x start-my-app-command.sh
+RUN git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git \
+    && cd App42PaaS-Java-MySQL-Sample \
+    && mvn clean \
+	&& mvn install \
+    && mvn package -DskipTests
 
-ENV CLASSPATH=/app/mysql-connector-java.jar
-
-CMD ["sh", "-c", "./start-my-app-command.sh"]
+FROM tomcat:alpine
+COPY --from=build /app/target/App42PaaS-Java-MySQL-Sample.war /usr/local/tomcat/webapps/
+CMD ["catalina.sh", "run"]
