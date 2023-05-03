@@ -2,7 +2,7 @@ FROM maven:3.6.3-jdk-8 AS build
 WORKDIR /app
 
 RUN git clone https://github.com/shephertz/App42PaaS-Java-MySQL-Sample.git \
-    && cd App42PaaS-Java-MySQL-Sample \
+    && cd App42PaaS-Java-MySQL-Sample/target \
     && mvn clean \
 	&& mvn install \
     && mvn package -DskipTests
